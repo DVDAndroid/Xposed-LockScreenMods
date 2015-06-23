@@ -10,15 +10,15 @@ Xposed Module extracted from [GravityBox](https://github.com/GravityBox/GravityB
 
 ##Working devices:
 
--Nexus 5, CM 12.1, Xposed Framework alpha4
--should work with stock Google/AOSP based ROMs
+- Nexus 5, CM 12.1, Xposed Framework alpha4
+- (should work with stock Google/AOSP based ROMs)
 
 ##Requirements
 
--Android Lollipop 5.0+
--Xposed Framework
+- Android Lollipop 5.0+
+- Xposed Framework
 
 
 #Credits
--[rovo89](https://github.com/rovo89) for Xposed Framework
--[C3C0](https://github.com/C3C0) for GravityBox source
+- [rovo89](https://github.com/rovo89) for Xposed Framework
+- [C3C0](https://github.com/C3C0) for GravityBox source
