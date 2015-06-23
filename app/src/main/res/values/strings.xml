@@ -1,0 +1,101 @@
+<resources>
+    <string name="app_name" translatable="false">LockScreen Mods - Xposed</string>
+
+    <!-- Lockscreen: app shortcuts -->
+    <string name="pref_lockscreen_shortcuts_title">Shortcuts</string>
+    <string name="pref_lockscreen_shortcuts_summary">Allows defining lock screen shortcuts</string>
+    <!-- Lockscreen: app shortcuts safe launch -->
+    <string name="pref_lockscreen_shortcuts_safe_launch_title">Safe launch</string>
+    <string name="pref_lockscreen_shortcuts_safe_launch_summary">Requires double tap to launch shortcuts preventing them from being launched accidentally while e.g. device is in the pocket</string>
+       <!-- AppPickerPreference -->
+    <string name="app_picker_search">Search</string>
+    <string name="app_picker_none">(None)</string>
+    <!-- Icon picker -->
+    <string name="icon_picker_choose_icon_title">Choose icon</string>
+    <string name="shortcuts_icon_picker_alarm">Alarm</string>
+    <string name="shortcuts_icon_picker_andy">Andy</string>
+    <string name="shortcuts_icon_picker_battery">Battery</string>
+    <string name="shortcuts_icon_picker_browser">Browser</string>
+    <string name="shortcuts_icon_picker_calendar">Calendar</string>
+    <string name="shortcuts_icon_picker_camera">Camera</string>
+    <string name="shortcuts_icon_picker_cloud">Cloud</string>
+    <string name="shortcuts_icon_picker_contact">Contact</string>
+    <string name="shortcuts_icon_picker_directdial">Direct Dial</string>
+    <string name="shortcuts_icon_picker_directmessage">Direct Message</string>
+    <string name="shortcuts_icon_picker_drive">Drive</string>
+    <string name="shortcuts_icon_picker_dropbox">Dropbox</string>
+    <string name="shortcuts_icon_picker_email">Email</string>
+    <string name="shortcuts_icon_picker_email2">Email Alternate</string>
+    <string name="shortcuts_icon_picker_evernote">Evernote</string>
+    <string name="shortcuts_icon_picker_facebook">Facebook</string>
+    <string name="shortcuts_icon_picker_favorite">Favorite</string>
+    <string name="shortcuts_icon_picker_file_browser">File Browser</string>
+    <string name="shortcuts_icon_picker_file_browser2">File Browser Alternate</string>
+    <string name="shortcuts_icon_picker_fitness">Fitness</string>
+    <string name="shortcuts_icon_picker_gallery">Gallery</string>
+    <string name="shortcuts_icon_picker_gears">Gears</string>
+    <string name="shortcuts_icon_picker_google_small">Google</string>
+    <string name="shortcuts_icon_picker_gplus">Google Plus</string>
+    <string name="shortcuts_icon_picker_gtalk">Hangouts</string>
+    <string name="shortcuts_icon_picker_help">Help</string>
+    <string name="shortcuts_icon_picker_joystick">Joystick</string>
+    <string name="shortcuts_icon_picker_key">Keys/Accounts</string>
+    <string name="shortcuts_icon_picker_laptop">Laptop</string>
+    <string name="shortcuts_icon_picker_notes">Notes</string>
+    <string name="shortcuts_icon_picker_luggage">Travel</string>
+    <string name="shortcuts_icon_picker_maps">Maps</string>
+    <string name="shortcuts_icon_picker_market">Market</string>
+    <string name="shortcuts_icon_picker_movie">Movies</string>
+    <string name="shortcuts_icon_picker_music">Music</string>
+    <string name="shortcuts_icon_picker_nav">Navigation</string>
+    <string name="shortcuts_icon_picker_phone">Phone</string>
+    <string name="shortcuts_icon_picker_package">Package</string>
+    <string name="shortcuts_icon_picker_pinterest">Pinterest</string>
+    <string name="shortcuts_icon_picker_play">Play</string>
+    <string name="shortcuts_icon_picker_pocket">Pocket</string>
+    <string name="shortcuts_icon_picker_quicksettings">Quick Settings</string>
+    <string name="shortcuts_icon_picker_rss">RSS Feed</string>
+    <string name="shortcuts_icon_picker_sdcard">SDCard</string>
+    <string name="shortcuts_icon_picker_search">Search</string>
+    <string name="shortcuts_icon_picker_sms">Messaging</string>
+    <string name="shortcuts_icon_picker_tasks">Tasks</string>
+    <string name="shortcuts_icon_picker_terminal">Terminal</string>
+    <string name="shortcuts_icon_picker_transit">Transit</string>
+    <string name="shortcuts_icon_picker_tv">TV</string>
+    <string name="shortcuts_icon_picker_twitter">Twitter</string>
+    <string name="shortcuts_icon_picker_unlock">Unlock</string>
+    <!-- AppPickerPreference: shortcut support -->
+    <string name="app_picker_applications">Applications</string>
+    <string name="app_picker_shortcuts">Shortcuts</string>
+    <string name="app_picker_shortcut_null_intent">Impossible to create launchable shortcut because activity did not return shortcut intent</string>
+    <string name="app_picker_shortcut_cancelled">Shortcut creation cancelled by target app</string>
+    <!-- AppPicker: icon pick cancelled -->
+    <string name="app_picker_icon_pick_cancelled" translatable="false">Icon pick cancelled by target app</string>
+    <!--  Icon Picker: additional icons -->
+    <string name="shortcuts_icon_picker_viber">Viber</string>
+    <string name="shortcuts_icon_picker_skype">Skype</string>
+    <string name="shortcuts_icon_picker_calculator">Calculator</string>
+    <!-- Icon picker: Snapchat icon -->
+    <string name="shortcuts_icon_picker_snapchat" translatable="false">Snapchat</string>
+    <!-- Icon picker: new icons -->
+    <string name="shortcuts_icon_picker_tapatalk" translatable="false">Tapatalk</string>
+    <string name="shortcuts_icon_picker_whatsapp" translatable="false">Whatsapp</string>
+    <!-- Application launcher -->
+    <string name="pref_cat_app_launcher_title">Application launcher</string>
+    <string name="pref_cat_app_launcher_summary">Dialog allowing to define up to 12 apps which can be assigned as HW Key Action or used as additional navigation bar key</string>
+    <string name="pref_app_launcher_slot_title">Application slot %d</string>
+
+    <!-- Icon Picker: additional icons -->
+    <string name="shortcuts_icon_picker_chrome" translatable="false">Chrome</string>
+    <string name="shortcuts_icon_picker_spotify" translatable="false">Spotify</string>
+
+    <string name="lc_please_wait">Please wait&#8230;</string>
+    <!-- ImagePicker -->
+    <string name="imgpick_dialog_title">Pick image using</string>
+    <string name="imgpick_choose_error">Error while choosing image</string>
+    <string name="imgpick_crop_error">Error while cropping image</string>
+
+    <string name="about">About</string>
+    <string name="about_message">App created by <b>dvdandroid</b>. Thanks to <b>C3C0</b> for <a href="https://github.com/GravityBox/GravityBox/tree/lollipop">GravityBox source</a>.</string>
+
+</resources>
