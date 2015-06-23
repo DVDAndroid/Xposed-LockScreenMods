@@ -23,10 +23,10 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
 import android.widget.TextView;
 
-import com.dvd.android.xposed.lockscreenmods.R;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import com.dvd.android.xposed.lockscreenmods.R;
 
 public class IconCheckListAdapter extends
 		ArrayAdapter<IIconCheckListAdapterItem> {
@@ -39,7 +39,7 @@ public class IconCheckListAdapter extends
 		super(context, R.layout.simple_list_item_2_multiple_choice, objects);
 
 		mContext = context;
-		mData = new ArrayList<IIconCheckListAdapterItem>(objects);
+		mData = new ArrayList<>(objects);
 		mSubtextEnabled = true;
 	}
 
@@ -50,7 +50,7 @@ public class IconCheckListAdapter extends
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View row = convertView;
-		ViewHolder holder = null;
+		ViewHolder holder;
 
 		if (row == null) {
 			LayoutInflater inflater = (LayoutInflater) mContext

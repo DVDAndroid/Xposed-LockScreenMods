@@ -29,16 +29,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.dvd.android.xposed.lockscreenmods.preference.AppPickerPreference;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.dvd.android.xposed.lockscreenmods.preference.AppPickerPreference;
+
 public class LockscreenSettings extends Activity {
 
 	public static final String PREF_CAT_KEY_LOCKSCREEN_SHORTCUTS = "pref_cat_lockscreen_shortcuts";
-	public static final List<String> PREF_KEY_LOCKSCREEN_SHORTCUT = new ArrayList<String>(
+	public static final List<String> PREF_KEY_LOCKSCREEN_SHORTCUT = new ArrayList<>(
 			Arrays.asList("pref_lockscreen_shortcut0",
 					"pref_lockscreen_shortcut1", "pref_lockscreen_shortcut2",
 					"pref_lockscreen_shortcut3", "pref_lockscreen_shortcut4",

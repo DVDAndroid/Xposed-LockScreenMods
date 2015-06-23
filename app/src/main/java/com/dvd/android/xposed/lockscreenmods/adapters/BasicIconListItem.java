@@ -18,66 +18,69 @@ package com.dvd.android.xposed.lockscreenmods.adapters;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 
-public class BasicIconListItem extends BasicListItem
-                               implements IIconListAdapterItem {
-    private Drawable mIconLeft;
-    private Drawable mIconRight;
-    private int mIconLeftId;
-    private int mIconRightId;
+public class BasicIconListItem extends BasicListItem implements
+		IIconListAdapterItem {
+	private Drawable mIconLeft;
+	private Drawable mIconRight;
+	private int mIconLeftId;
+	private int mIconRightId;
 
-    public BasicIconListItem(String text, String subText, Drawable iconLeft, Drawable iconRight) {
-        super(text, subText);
+	public BasicIconListItem(String text, String subText, Drawable iconLeft,
+			Drawable iconRight) {
+		super(text, subText);
 
-        mIconLeft = iconLeft;
-        mIconRight = iconRight;
-    }
+		mIconLeft = iconLeft;
+		mIconRight = iconRight;
+	}
 
-    public BasicIconListItem(String text, String subText, int iconLeftId, int iconRightId, Resources res) {
-        super(text,  subText);
+	@SuppressWarnings("deprecation")
+	public BasicIconListItem(String text, String subText, int iconLeftId,
+			int iconRightId, Resources res) {
+		super(text, subText);
 
-        mIconLeftId = iconLeftId;
-        mIconRightId = iconRightId;
+		mIconLeftId = iconLeftId;
+		mIconRightId = iconRightId;
 
-        if (mIconLeftId != 0) {
-            mIconLeft = res.getDrawable(mIconLeftId);
-        }
-        if (mIconRightId != 0) {
-            mIconRight = res.getDrawable(mIconRightId);
-        }
-    }
+		if (mIconLeftId != 0) {
+			mIconLeft = res.getDrawable(mIconLeftId);
+		}
+		if (mIconRightId != 0) {
+			mIconRight = res.getDrawable(mIconRightId);
+		}
+	}
 
-    public BasicIconListItem(String text, String subText) {
-        this(text, subText, null, null);
-    }
+	public BasicIconListItem(String text, String subText) {
+		this(text, subText, null, null);
+	}
 
-    @Override
-    public Drawable getIconLeft() {
-        return mIconLeft;
-    }
+	@Override
+	public Drawable getIconLeft() {
+		return mIconLeft;
+	}
 
-    @Override
-    public Drawable getIconRight() {
-        return mIconRight;
-    }
+	@Override
+	public Drawable getIconRight() {
+		return mIconRight;
+	}
 
-    public void setIconIdLeft(Drawable icon) {
-        mIconLeft = icon;		
-    }
+	public void setIconRight(Drawable icon) {
+		mIconRight = icon;
+	}
 
-    public void setIconRight(Drawable icon) {
-        mIconRight = icon;
-    }
+	public void setIconIdLeft(Drawable icon) {
+		mIconLeft = icon;
+	}
 
-    public int getIconLeftId() {
-        return mIconLeftId;
-    }
+	public int getIconLeftId() {
+		return mIconLeftId;
+	}
 
-    public int getIconRightId() {
-        return mIconRightId;
-    }
+	public int getIconRightId() {
+		return mIconRightId;
+	}
 
-    public void setIcons(Drawable left, Drawable right) {
-        mIconLeft = left;
-        mIconRight = right;
-    }
+	public void setIcons(Drawable left, Drawable right) {
+		mIconLeft = left;
+		mIconRight = right;
+	}
 }

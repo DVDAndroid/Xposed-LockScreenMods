@@ -16,29 +16,29 @@
 package com.dvd.android.xposed.lockscreenmods.adapters;
 
 public class BasicListItem implements IBaseListAdapterItem {
-    private String mText;
-    private String mSubText;
+	private String mText;
+	private String mSubText;
 
-    public BasicListItem(String text, String subText) {
-        mText = text;
-        mSubText = subText;
-    }
+	public BasicListItem(String text, String subText) {
+		mText = text;
+		mSubText = subText;
+	}
 
-    @Override
-    public String getText() {
-        return mText;
-    }
+	@Override
+	public String getText() {
+		return mText;
+	}
 
-    @Override
-    public String getSubText() {
-        return mSubText;
-    }
+	public void setText(String text) {
+		mText = text;
+	}
 
-    public void setText(String text) {
-        mText = text;           
-    }
+	@Override
+	public String getSubText() {
+		return mSubText;
+	}
 
-    public void setSubText(String text) {
-        mSubText = text;
-    }
+	public void setSubText(String text) {
+		mSubText = text;
+	}
 }

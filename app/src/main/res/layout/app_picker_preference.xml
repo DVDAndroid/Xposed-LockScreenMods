@@ -12,28 +12,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 -->
- 
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <Spinner
         android:id="@+id/mode_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp" />
+        android:layout_margin="10dp"/>
 
-    <EditText 
+    <EditText
         android:id="@+id/input_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
         android:hint="@string/app_picker_search"
         android:inputType="text"
-        android:saveEnabled="false"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp" />
+        android:saveEnabled="false"/>
 
     <ProgressBar
         android:id="@+id/progress_bar"
@@ -41,13 +40,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="10dp" />
+        android:layout_margin="10dp"/>
 
     <ListView
         android:id="@+id/icon_list"
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight="1"
-        android:paddingRight="10dp" />
+        android:paddingRight="10dp"/>
 
 </LinearLayout>

@@ -16,6 +16,7 @@
 package com.dvd.android.xposed.lockscreenmods.adapters;
 
 public interface IIconCheckListAdapterItem extends IIconListAdapterItem {
-    void setChecked(boolean checked);
-    boolean isChecked();
+	boolean isChecked();
+
+	void setChecked(boolean checked);
 }

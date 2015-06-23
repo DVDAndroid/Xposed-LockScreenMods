@@ -18,6 +18,7 @@ package com.dvd.android.xposed.lockscreenmods.adapters;
 import android.graphics.drawable.Drawable;
 
 public interface IIconListAdapterItem extends IBaseListAdapterItem {
-    public Drawable getIconLeft();
-    public Drawable getIconRight();
+	Drawable getIconLeft();
+
+	Drawable getIconRight();
 }

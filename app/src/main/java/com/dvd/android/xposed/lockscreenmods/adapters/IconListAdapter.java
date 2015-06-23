@@ -22,83 +22,83 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.dvd.android.xposed.lockscreenmods.adapters.BaseListAdapterFilter.IBaseListAdapterFilterable;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import com.dvd.android.xposed.lockscreenmods.adapters.BaseListAdapterFilter.IBaseListAdapterFilterable;
+
 public class IconListAdapter extends ArrayAdapter<IIconListAdapterItem>
-                             implements IBaseListAdapterFilterable<IIconListAdapterItem> {
-    private Context mContext;
-    private List<IIconListAdapterItem> mData = null;
-    private List<IIconListAdapterItem> mFilteredData = null;
-    private android.widget.Filter mFilter;
+		implements IBaseListAdapterFilterable<IIconListAdapterItem> {
+	private Context mContext;
+	private List<IIconListAdapterItem> mData = null;
+	private List<IIconListAdapterItem> mFilteredData = null;
+	private android.widget.Filter mFilter;
 
-    public IconListAdapter(Context context, List<IIconListAdapterItem> objects) {
-        super(context, android.R.layout.simple_list_item_1, objects);
+	public IconListAdapter(Context context, List<IIconListAdapterItem> objects) {
+		super(context, android.R.layout.simple_list_item_1, objects);
 
-        mContext = context;
-        mData = new ArrayList<IIconListAdapterItem>(objects);
-        mFilteredData = new ArrayList<IIconListAdapterItem>(objects);
-    }
+		mContext = context;
+		mData = new ArrayList<>(objects);
+		mFilteredData = new ArrayList<>(objects);
+	}
 
-    static class ViewHolder {
-        TextView text;
-    }
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent) {
+		View row = convertView;
+		ViewHolder holder;
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View row = convertView;
-        ViewHolder holder = null;
+		if (row == null) {
+			LayoutInflater inflater = (LayoutInflater) mContext
+					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			row = inflater.inflate(android.R.layout.simple_list_item_1, parent,
+					false);
 
-        if(row == null) {
-            LayoutInflater inflater = 
-                    (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            row = inflater.inflate(android.R.layout.simple_list_item_1, parent, false);
+			holder = new ViewHolder();
+			holder.text = (TextView) row.findViewById(android.R.id.text1);
+			holder.text.setCompoundDrawablePadding(10);
+			row.setTag(holder);
+		} else {
+			holder = (ViewHolder) row.getTag();
+		}
 
-            holder = new ViewHolder();
-            holder.text = (TextView) row.findViewById(android.R.id.text1);
-            holder.text.setCompoundDrawablePadding(10);
-            row.setTag(holder);
-        } else {
-            holder = (ViewHolder) row.getTag();
-        }
+		IIconListAdapterItem item = mFilteredData.get(position);
 
-        IIconListAdapterItem item = mFilteredData.get(position);
+		holder.text.setText(item.getText());
+		holder.text.setCompoundDrawablesWithIntrinsicBounds(item.getIconLeft(),
+				null, item.getIconRight(), null);
 
-        holder.text.setText(item.getText());
-        holder.text.setCompoundDrawablesWithIntrinsicBounds(
-                item.getIconLeft(), null, item.getIconRight(), null);
+		return row;
+	}
 
-        return row;
-    }
+	@Override
+	public android.widget.Filter getFilter() {
+		if (mFilter == null)
+			mFilter = new BaseListAdapterFilter<>(this);
 
-    @Override
-    public android.widget.Filter getFilter() {
-        if(mFilter == null)
-            mFilter = new BaseListAdapterFilter<IIconListAdapterItem>(this);
+		return mFilter;
+	}
 
-        return mFilter;
-    }
+	@Override
+	public List<IIconListAdapterItem> getOriginalData() {
+		return mData;
+	}
 
-    @Override
-    public List<IIconListAdapterItem> getOriginalData() {
-        return mData;
-    }
+	@Override
+	public List<IIconListAdapterItem> getFilteredData() {
+		return mFilteredData;
+	}
 
-    @Override
-    public List<IIconListAdapterItem> getFilteredData() {
-        return mFilteredData;
-    }
+	@Override
+	public void onFilterPublishResults(List<IIconListAdapterItem> results) {
+		mFilteredData = results;
+		clear();
+		for (int i = 0; i < mFilteredData.size(); i++) {
+			IIconListAdapterItem item = mFilteredData.get(i);
+			add(item);
+		}
+	}
 
-    @Override
-    public void onFilterPublishResults(List<IIconListAdapterItem> results) {
-        mFilteredData = results;
-        clear();
-        for (int i = 0; i < mFilteredData.size(); i++)
-        {
-            IIconListAdapterItem item = mFilteredData.get(i);
-            add(item);
-        }
-    }
+	static class ViewHolder {
+		TextView text;
+	}
 }

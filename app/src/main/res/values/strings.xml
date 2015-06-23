@@ -7,7 +7,7 @@
     <!-- Lockscreen: app shortcuts safe launch -->
     <string name="pref_lockscreen_shortcuts_safe_launch_title">Safe launch</string>
     <string name="pref_lockscreen_shortcuts_safe_launch_summary">Requires double tap to launch shortcuts preventing them from being launched accidentally while e.g. device is in the pocket</string>
-       <!-- AppPickerPreference -->
+    <!-- AppPickerPreference -->
     <string name="app_picker_search">Search</string>
     <string name="app_picker_none">(None)</string>
     <!-- Icon picker -->

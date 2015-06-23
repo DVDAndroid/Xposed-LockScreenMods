@@ -74,14 +74,14 @@
     <string name="pref_cat_app_launcher_title">Applicazioni rapide</string>
     <string name="pref_cat_app_launcher_summary">Consente di definire fino a 12 app che possono essere assegnate a azioni tasti hardware o usate come pulsanti sulla barra di navigazione</string>
     <string name="pref_app_launcher_slot_title">Slot Applicazione %d</string>
-        <!-- Lockscreen: app shortcuts safe launch -->
+    <!-- Lockscreen: app shortcuts safe launch -->
     <string name="pref_lockscreen_shortcuts_safe_launch_title">Avvio sicuro</string>
     <string name="pref_lockscreen_shortcuts_safe_launch_summary">Richiede un doppio tap per lanciare i collegamenti evitando di aprirli accidentalmente es: quando il telefono è in tasca</string>
     <!-- Lockscreen: app shortcuts -->
     <string name="pref_lockscreen_shortcuts_title">Collegamenti</string>
     <string name="pref_lockscreen_shortcuts_summary">Permette di definire i collegamenti per la lockscreen</string>
     <string name="about">Info</string>
-    <string name="about_message">App creata da <b>dvdandroid</b>. Grazie a <b>C3C0</b> for <a href="https://github.com/GravityBox/GravityBox/tree/lollipop">il codice sorgente di GravityBox</a>.</string>
+    <string name="about_message">App creata da <b>dvdandroid</b>. Grazie a <b>C3C0</b> per <a href="https://github.com/GravityBox/GravityBox/tree/lollipop">il codice sorgente di GravityBox</a>.</string>
     <string name="lc_please_wait">Attendere prego&#8230;</string>
 
 </resources>
