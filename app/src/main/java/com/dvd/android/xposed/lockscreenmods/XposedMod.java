@@ -7,14 +7,13 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 public class XposedMod implements IXposedHookZygoteInit, IXposedHookLoadPackage {
 
-	public static String PACKAGE_NAME = "com.dvd.android.xposed.lockscreenshorcut";
+	public static String PACKAGE_NAME = "com.dvd.android.xposed.lockscreenmods";
 	private XSharedPreferences prefs;
 
 	@Override
 	public void initZygote(StartupParam startupParam) throws Throwable {
 		prefs = new XSharedPreferences(PACKAGE_NAME);
 		prefs.makeWorldReadable();
-
 	}
 
 	@Override
