@@ -83,5 +83,7 @@
     <string name="about">Info</string>
     <string name="about_message">App creata da <b>dvdandroid</b>. Grazie a <b>C3C0</b> per <a href="https://github.com/GravityBox/GravityBox/tree/lollipop">il codice sorgente di GravityBox</a>.</string>
     <string name="lc_please_wait">Attendere prego&#8230;</string>
+    <string name="hide_icon_title">Nascondi icona dal launcher</string>
+    <string name="other_settings">Altre impostazioni</string>
 
 </resources>

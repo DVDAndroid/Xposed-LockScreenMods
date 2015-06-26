@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-                  android:key="pref_cat_lockscreen_shortcuts"
-                  android:summary="@string/pref_lockscreen_shortcuts_summary"
-                  android:title="@string/pref_lockscreen_shortcuts_title">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <CheckBoxPreference
-        android:defaultValue="false"
-        android:key="pref_lockscreen_shortcuts_safe_launch"
-        android:summary="@string/pref_lockscreen_shortcuts_safe_launch_summary"
-        android:title="@string/pref_lockscreen_shortcuts_safe_launch_title"/>
+    <PreferenceCategory
+        android:key="pref_cat_lockscreen_shortcuts"
+        android:title="@string/pref_lockscreen_shortcuts_title">
 
-    <!-- will be populated at runtime -->
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="pref_lockscreen_shortcuts_safe_launch"
+            android:summary="@string/pref_lockscreen_shortcuts_safe_launch_summary"
+            android:title="@string/pref_lockscreen_shortcuts_safe_launch_title"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/other_settings">
+
+        <CheckBoxPreference
+            android:key="hide_icon"
+            android:title="@string/hide_icon_title"/>
+
+    </PreferenceCategory>
 </PreferenceScreen>
