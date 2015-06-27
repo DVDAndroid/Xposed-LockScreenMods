@@ -85,5 +85,6 @@
     <string name="lc_please_wait">Attendere prego&#8230;</string>
     <string name="hide_icon_title">Nascondi icona dal launcher</string>
     <string name="other_settings">Altre impostazioni</string>
+    <string name="set_icon_size">Imposta dimensione icona</string>
 
 </resources>

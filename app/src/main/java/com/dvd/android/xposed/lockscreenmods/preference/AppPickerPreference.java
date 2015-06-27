@@ -57,6 +57,14 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.dvd.android.xposed.lockscreenmods.LockscreenSettings;
+import com.dvd.android.xposed.lockscreenmods.R;
+import com.dvd.android.xposed.lockscreenmods.Utils;
+import com.dvd.android.xposed.lockscreenmods.adapters.BasicIconListItem;
+import com.dvd.android.xposed.lockscreenmods.adapters.IIconListAdapterItem;
+import com.dvd.android.xposed.lockscreenmods.adapters.IconListAdapter;
+import com.dvd.android.xposed.lockscreenmods.shortcut.ShortcutActivity;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -68,14 +76,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-
-import com.dvd.android.xposed.lockscreenmods.LockscreenSettings;
-import com.dvd.android.xposed.lockscreenmods.R;
-import com.dvd.android.xposed.lockscreenmods.Utils;
-import com.dvd.android.xposed.lockscreenmods.adapters.BasicIconListItem;
-import com.dvd.android.xposed.lockscreenmods.adapters.IIconListAdapterItem;
-import com.dvd.android.xposed.lockscreenmods.adapters.IconListAdapter;
-import com.dvd.android.xposed.lockscreenmods.shortcut.ShortcutActivity;
 
 @SuppressWarnings("all")
 public class AppPickerPreference extends DialogPreference implements
@@ -737,9 +737,9 @@ public class AppPickerPreference extends DialogPreference implements
 						mResolveInfo.activityInfo.name);
 				mCreateShortcutIntent.setComponent(cn);
 				// mark intent so we can later identify it comes from GB
-				mCreateShortcutIntent.putExtra("gravitybox", true);
-				if (mAllowUnlockAction) {
-					mCreateShortcutIntent.putExtra(
+                mCreateShortcutIntent.putExtra("dvd", true);
+                if (mAllowUnlockAction) {
+                    mCreateShortcutIntent.putExtra(
 							ShortcutActivity.EXTRA_ALLOW_UNLOCK_ACTION, true);
 				}
 			}

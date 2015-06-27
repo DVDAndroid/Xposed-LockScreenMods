@@ -99,5 +99,6 @@
     <string name="about_message">App created by <b>dvdandroid</b>. Thanks to <b>C3C0</b> for <a href="https://github.com/GravityBox/GravityBox/tree/lollipop">GravityBox source</a>.</string>
     <string name="hide_icon_title">Hide icon from launcher</string>
     <string name="other_settings">Other settings</string>
+    <string name="set_icon_size">Set icon size</string>
 
 </resources>

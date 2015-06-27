@@ -18,9 +18,9 @@ import android.content.Intent;
 
 public class ShortcutActivity {
 
-	public static final String ACTION_LAUNCH_ACTION = "gravitybox.intent.action.LAUNCH_ACTION";
-	public static final String EXTRA_ACTION = "action";
-	public static final String EXTRA_ACTION_TYPE = "actionType";
+    public static final String ACTION_LAUNCH_ACTION = "dvd.intent.action.LAUNCH_ACTION";
+    public static final String EXTRA_ACTION = "action";
+    public static final String EXTRA_ACTION_TYPE = "actionType";
 	public static final String EXTRA_ALLOW_UNLOCK_ACTION = "allowUnlockAction";
 
 	public static boolean isGbBroadcastShortcut(Intent intent) {

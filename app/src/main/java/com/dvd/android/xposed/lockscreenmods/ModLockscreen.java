@@ -26,99 +26,104 @@ import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 
-import static com.dvd.android.xposed.lockscreenmods.LockscreenSettings.ACTION_PREF_LOCKSCREEN_SHORTCUT_CHANGED;
+import static com.dvd.android.xposed.lockscreenmods.LockscreenSettings.ACTION_PREF_LOCKSCREEN_SHORTCUT_SETTING_CHANGED;
 import static com.dvd.android.xposed.lockscreenmods.LockscreenSettings.EXTRA_LS_SAFE_LAUNCH;
 import static com.dvd.android.xposed.lockscreenmods.LockscreenSettings.EXTRA_LS_SHORTCUT_SLOT;
 import static com.dvd.android.xposed.lockscreenmods.LockscreenSettings.EXTRA_LS_SHORTCUT_VALUE;
+import static com.dvd.android.xposed.lockscreenmods.LockscreenSettings.PREF_SIZE_ICON;
 
 public class ModLockscreen {
 
-	public static final String PACKAGE_NAME = "com.android.systemui";
-	public static final String CLASS_PHONE_STATUSBAR = "com.android.systemui.statusbar.phone.PhoneStatusBar";
-	private static final boolean DEBUG = false;
-	private static final String TAG = "LockScreenShortcut:ModLockscreen";
-	private static final String CLASS_KGVIEW_MEDIATOR = "com.android.systemui.keyguard.KeyguardViewMediator";
-	private static LockscreenAppBar mAppBar;
-	private static Context mContext;
-	private static Context mGbContext;
+    public static final String PACKAGE_NAME = "com.android.systemui";
+    public static final String CLASS_PHONE_STATUSBAR = "com.android.systemui.statusbar.phone.PhoneStatusBar";
+    private static final boolean DEBUG = false;
+    private static final String TAG = "LockScreenShortcut:ModLockscreen";
+    private static final String CLASS_KGVIEW_MEDIATOR = "com.android.systemui.keyguard.KeyguardViewMediator";
+    private static LockscreenAppBar mAppBar;
+    private static Context mContext;
+    private static Context mGbContext;
 
-	private static BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			String action = intent.getAction();
-			if (action.equals(ACTION_PREF_LOCKSCREEN_SHORTCUT_CHANGED)) {
-				if (mAppBar != null) {
-					if (intent.hasExtra(EXTRA_LS_SHORTCUT_SLOT)) {
-						mAppBar.updateAppSlot(
-								intent.getIntExtra(EXTRA_LS_SHORTCUT_SLOT, 0),
-								intent.getStringExtra(EXTRA_LS_SHORTCUT_VALUE));
-					}
-					if (intent.hasExtra(EXTRA_LS_SAFE_LAUNCH)) {
-						mAppBar.setSafeLaunchEnabled(intent.getBooleanExtra(
-								EXTRA_LS_SAFE_LAUNCH, false));
-					}
-				}
-			}
-		}
-	};
+    private static BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(ACTION_PREF_LOCKSCREEN_SHORTCUT_SETTING_CHANGED)) {
+                if (mAppBar != null) {
+                    if (intent.hasExtra(EXTRA_LS_SHORTCUT_SLOT)) {
+                        mAppBar.updateAppSlot(
+                                intent.getIntExtra(EXTRA_LS_SHORTCUT_SLOT, 0),
+                                intent.getStringExtra(EXTRA_LS_SHORTCUT_VALUE));
+                    }
+                    if (intent.hasExtra(EXTRA_LS_SAFE_LAUNCH)) {
+                        mAppBar.setSafeLaunchEnabled(intent.getBooleanExtra(
+                                EXTRA_LS_SAFE_LAUNCH, false));
+                    }
+                    if (intent.hasExtra(PREF_SIZE_ICON)) {
+                        mAppBar.setSize(intent.getIntExtra(PREF_SIZE_ICON, 40));
+                    }
+                }
 
-	private static void log(String message) {
-		XposedBridge.log(TAG + ": " + message);
-	}
+            }
+        }
+    };
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public static void init(final XSharedPreferences prefs,
-			final ClassLoader classLoader) {
-		try {
-			final Class<?> kgViewMediatorClass = XposedHelpers.findClass(
-					CLASS_KGVIEW_MEDIATOR, classLoader);
+    private static void log(String message) {
+        XposedBridge.log(TAG + ": " + message);
+    }
 
-			String setupMethodName = Build.VERSION.SDK_INT >= 22 ? "setupLocked"
-					: "setup";
-			XposedHelpers.findAndHookMethod(kgViewMediatorClass,
-					setupMethodName, new XC_MethodHook() {
-						@Override
-						protected void afterHookedMethod(
-								final MethodHookParam param) throws Throwable {
-							mContext = (Context) XposedHelpers.getObjectField(
-									param.thisObject, "mContext");
-							mGbContext = mContext.createPackageContext(
-									XposedMod.PACKAGE_NAME, 0);
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    public static void init(final XSharedPreferences prefs,
+                            final ClassLoader classLoader) {
+        try {
+            final Class<?> kgViewMediatorClass = XposedHelpers.findClass(
+                    CLASS_KGVIEW_MEDIATOR, classLoader);
 
-							IntentFilter intentFilter = new IntentFilter();
-							intentFilter
-									.addAction(ACTION_PREF_LOCKSCREEN_SHORTCUT_CHANGED);
-							mContext.registerReceiver(mBroadcastReceiver,
-									intentFilter);
-							if (DEBUG)
-								log("Keyguard mediator constructed");
-						}
-					});
+            String setupMethodName = Build.VERSION.SDK_INT >= 22 ? "setupLocked"
+                    : "setup";
+            XposedHelpers.findAndHookMethod(kgViewMediatorClass,
+                    setupMethodName, new XC_MethodHook() {
+                        @Override
+                        protected void afterHookedMethod(
+                                final MethodHookParam param) throws Throwable {
+                            mContext = (Context) XposedHelpers.getObjectField(
+                                    param.thisObject, "mContext");
+                            mGbContext = mContext.createPackageContext(
+                                    XposedMod.PACKAGE_NAME, 0);
 
-			XposedHelpers.findAndHookMethod(CLASS_PHONE_STATUSBAR, classLoader,
-					"makeStatusBarView", new XC_MethodHook() {
-						@Override
-						protected void afterHookedMethod(
-								final MethodHookParam param) throws Throwable {
-							ViewGroup kgStatusView = (ViewGroup) XposedHelpers
-									.getObjectField(param.thisObject,
-											"mKeyguardStatusView");
-							int containerId = kgStatusView.getResources()
-									.getIdentifier("keyguard_clock_container",
-											"id", PACKAGE_NAME);
-							if (containerId != 0) {
-								ViewGroup container = (ViewGroup) kgStatusView
-										.findViewById(containerId);
-								if (container != null) {
-									mAppBar = new LockscreenAppBar(mContext,
-											mGbContext, container,
-											param.thisObject, prefs);
-								}
-							}
-						}
-					});
-		} catch (Throwable t) {
-			XposedBridge.log(t);
-		}
-	}
+                            IntentFilter intentFilter = new IntentFilter();
+                            intentFilter
+                                    .addAction(ACTION_PREF_LOCKSCREEN_SHORTCUT_SETTING_CHANGED);
+                            mContext.registerReceiver(mBroadcastReceiver,
+                                    intentFilter);
+                            if (DEBUG)
+                                log("Keyguard mediator constructed");
+                        }
+                    });
+
+            XposedHelpers.findAndHookMethod(CLASS_PHONE_STATUSBAR, classLoader,
+                    "makeStatusBarView", new XC_MethodHook() {
+                        @Override
+                        protected void afterHookedMethod(
+                                final MethodHookParam param) throws Throwable {
+                            ViewGroup kgStatusView = (ViewGroup) XposedHelpers
+                                    .getObjectField(param.thisObject,
+                                            "mKeyguardStatusView");
+                            int containerId = kgStatusView.getResources()
+                                    .getIdentifier("keyguard_clock_container",
+                                            "id", PACKAGE_NAME);
+                            if (containerId != 0) {
+                                ViewGroup container = (ViewGroup) kgStatusView
+                                        .findViewById(containerId);
+                                if (container != null) {
+                                    mAppBar = new LockscreenAppBar(mContext,
+                                            mGbContext, container,
+                                            param.thisObject, prefs);
+                                }
+                            }
+                        }
+                    });
+        } catch (Throwable t) {
+            XposedBridge.log(t);
+        }
+    }
 }

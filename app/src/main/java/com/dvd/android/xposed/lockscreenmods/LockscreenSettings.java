@@ -45,12 +45,13 @@ public class LockscreenSettings extends Activity {
                     "pref_lockscreen_shortcut1", "pref_lockscreen_shortcut2",
                     "pref_lockscreen_shortcut3", "pref_lockscreen_shortcut4",
                     "pref_lockscreen_shortcut5"));
-    public static final String ACTION_PREF_LOCKSCREEN_SHORTCUT_CHANGED = "gravitybox.intent.action.LOCKSCREEN_SHORTCUT_CHANGED";
+    public static final String ACTION_PREF_LOCKSCREEN_SHORTCUT_SETTING_CHANGED = "dvd.intent.action.LOCKSCREEN_SHORTCUT_SETTING_CHANGED";
     public static final String EXTRA_LS_SHORTCUT_SLOT = "lockscreenShortcutSlot";
     public static final String EXTRA_LS_SHORTCUT_VALUE = "lockscreenShortcutValue";
     public static final String EXTRA_LS_SAFE_LAUNCH = "lockscreenShortcutSafeLaunch";
     public static final String PREF_KEY_LOCKSCREEN_SHORTCUT_SAFE_LAUNCH = "pref_lockscreen_shortcuts_safe_launch";
     public static final String PREF_HIDE_ICON = "hide_icon";
+    public static final String PREF_SIZE_ICON = "icon_size";
     private static SharedPreferences mPrefs;
     private static String mainClass;
 
@@ -137,13 +138,16 @@ public class LockscreenSettings extends Activity {
             Intent intent = new Intent();
 
             if (PREF_KEY_LOCKSCREEN_SHORTCUT.contains(key)) {
-                intent.setAction(ACTION_PREF_LOCKSCREEN_SHORTCUT_CHANGED);
+                intent.setAction(ACTION_PREF_LOCKSCREEN_SHORTCUT_SETTING_CHANGED);
                 intent.putExtra(EXTRA_LS_SHORTCUT_SLOT,
                         PREF_KEY_LOCKSCREEN_SHORTCUT.indexOf(key));
                 intent.putExtra(EXTRA_LS_SHORTCUT_VALUE,
                         mPrefs.getString(key, null));
+            } else if (key.equals(PREF_SIZE_ICON)) {
+                intent.setAction(ACTION_PREF_LOCKSCREEN_SHORTCUT_SETTING_CHANGED);
+                intent.putExtra(PREF_SIZE_ICON, sharedPreferences.getInt(key, 40));
             } else if (key.equals(PREF_KEY_LOCKSCREEN_SHORTCUT_SAFE_LAUNCH)) {
-                intent.setAction(ACTION_PREF_LOCKSCREEN_SHORTCUT_CHANGED);
+                intent.setAction(ACTION_PREF_LOCKSCREEN_SHORTCUT_SETTING_CHANGED);
                 intent.putExtra(EXTRA_LS_SAFE_LAUNCH,
                         mPrefs.getBoolean(key, false));
             } else if (key.equals(PREF_HIDE_ICON)) {
