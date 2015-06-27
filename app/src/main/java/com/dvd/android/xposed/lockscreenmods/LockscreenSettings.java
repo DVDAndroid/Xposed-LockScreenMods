@@ -55,6 +55,16 @@ public class LockscreenSettings extends Activity {
     private static SharedPreferences mPrefs;
     private static String mainClass;
 
+    public static boolean isPackageInstalled(Context context, String packagename) {
+        PackageManager pm = context.getPackageManager();
+        try {
+            pm.getPackageInfo(packagename, PackageManager.GET_ACTIVITIES);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,6 +124,18 @@ public class LockscreenSettings extends Activity {
 
             PreferenceCategory mPrefCatLsShortcuts = (PreferenceCategory) findPreference(PREF_CAT_KEY_LOCKSCREEN_SHORTCUTS);
             mPrefs = getPreferenceManager().getSharedPreferences();
+
+            if (isPackageInstalled(getActivity(), "com.ceco.lollipop.gravitybox") && mPrefs.getBoolean("welcome", true)) {
+                AlertDialog alert = new AlertDialog.Builder(getActivity())
+                        .setTitle(R.string.warning)
+                        .setMessage(R.string.gravitybox_installed)
+                        .setCancelable(false)
+                        .setPositiveButton(android.R.string.ok, null)
+                        .create();
+                alert.show();
+
+                mPrefs.edit().putBoolean("welcome", false).apply();
+            }
 
             for (int i = 0; i < PREF_KEY_LOCKSCREEN_SHORTCUT.size(); i++) {
                 AppPickerPreference appPref = new AppPickerPreference(

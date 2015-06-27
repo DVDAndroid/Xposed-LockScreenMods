@@ -86,5 +86,7 @@
     <string name="hide_icon_title">Nascondi icona dal launcher</string>
     <string name="other_settings">Altre impostazioni</string>
     <string name="set_icon_size">Imposta dimensione icona</string>
+    <string name="gravitybox_installed">Sembra che GravityBox sia installato. GravityBox può causare alcuni problemi. Non disinstallarlo, disabilita solamente i collegamenti</string>
+    <string name="warning">ATTENZIONE!</string>
 
 </resources>

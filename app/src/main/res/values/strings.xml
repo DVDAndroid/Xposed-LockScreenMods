@@ -100,5 +100,7 @@
     <string name="hide_icon_title">Hide icon from launcher</string>
     <string name="other_settings">Other settings</string>
     <string name="set_icon_size">Set icon size</string>
+    <string name="warning">WARNING!</string>
+    <string name="gravitybox_installed">It seems that GravityBox is installed. GravityBox can cause some bugs. Don\'t uninstall it, only disable shortcuts</string>
 
 </resources>
