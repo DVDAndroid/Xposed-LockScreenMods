@@ -55,6 +55,9 @@ public class LockscreenAppBar {
     private boolean mSafeLaunchEnabled;
     private AppInfo mPendingAction;
     private Handler mHandler;
+    private int mSize;
+    private boolean mAnimations;
+    private boolean mLongClick;
     private Runnable pendingActionExpiredRunnable = new Runnable() {
         @Override
         public void run() {
@@ -64,7 +67,6 @@ public class LockscreenAppBar {
             }
         }
     };
-    private int mSize;
 
     public LockscreenAppBar(Context ctx, Context gbCtx, ViewGroup container,
                             Object statusBar, XSharedPreferences prefs) {
@@ -79,6 +81,8 @@ public class LockscreenAppBar {
                 LockscreenSettings.PREF_KEY_LOCKSCREEN_SHORTCUT_SAFE_LAUNCH,
                 false);
         mSize = prefs.getInt(LockscreenSettings.PREF_SIZE_ICON, 95);
+        mAnimations = prefs.getBoolean(LockscreenSettings.PREF_ANIMATIONS_ENABLED, true);
+        mLongClick = prefs.getBoolean(LockscreenSettings.PREF_LONG_CLICK, false);
 
         initAppSlots();
     }
@@ -91,7 +95,6 @@ public class LockscreenAppBar {
         LayoutInflater inflater = LayoutInflater.from(mGbContext);
         mRootView = (ViewGroup) inflater.inflate(R.layout.lockscreen_app_bar,
                 mContainer, false);
-        mContainer.removeView(mRootView);
         mContainer.addView(mRootView);
 
         mAppSlots = new ArrayList<>(6);
@@ -161,13 +164,28 @@ public class LockscreenAppBar {
 
     public void setSize(int size) {
         mSize = size;
+        refreshAppSlots();
+    }
+
+    public void refreshAppSlots() {
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(mSize, mSize);
+
         for (int i = 0; i < mRootView.getChildCount(); i++) {
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(mSize, mSize);
-            mRootView.getChildAt(i).setLayoutParams(layoutParams);
+            View app = mRootView.getChildAt(i);
+
+            app.setLayoutParams(layoutParams);
         }
     }
 
-    private final class AppInfo implements View.OnClickListener {
+    public void setAnimations(boolean enabled) {
+        mAnimations = enabled;
+    }
+
+    public void setLongClick(boolean enabled) {
+        mLongClick = enabled;
+    }
+
+    private final class AppInfo implements View.OnClickListener, View.OnLongClickListener {
         private Intent mIntent;
         private Resources mResources;
         private ImageView mView;
@@ -177,6 +195,7 @@ public class LockscreenAppBar {
             mView = (ImageView) mRootView.findViewById(resId);
             mView.setVisibility(View.GONE);
             mView.setOnClickListener(this);
+            mView.setOnLongClickListener(this);
         }
 
         private void reset() {
@@ -243,20 +262,21 @@ public class LockscreenAppBar {
         }
 
         public void zoomIn() {
-            if (mView != null) {
+            if (mAnimations && mView != null) {
                 mView.animate().scaleX(1.2f).scaleY(1.2f).setDuration(100)
                         .start();
             }
         }
 
         public void zoomOut() {
-            if (mView != null) {
+            if (mAnimations && mView != null) {
                 mView.animate().scaleX(1f).scaleY(1f).setDuration(100).start();
             }
         }
 
         @Override
         public void onClick(View v) {
+            if (mLongClick) return;
             if (mSafeLaunchEnabled) {
                 mHandler.removeCallbacks(pendingActionExpiredRunnable);
 
@@ -276,6 +296,16 @@ public class LockscreenAppBar {
                     startActivity(mIntent);
                 }
             }
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            if (!mLongClick) return false;
+            if (mIntent != null) {
+                if (mAnimations) zoomIn();
+                startActivity(mIntent);
+            }
+            return false;
         }
     }
 }

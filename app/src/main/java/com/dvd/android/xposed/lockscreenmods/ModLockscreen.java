@@ -19,6 +19,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
+import android.os.PowerManager;
+import android.os.SystemClock;
 import android.view.ViewGroup;
 
 import de.robv.android.xposed.XC_MethodHook;
@@ -27,9 +29,13 @@ import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 
 import static com.dvd.android.xposed.lockscreenmods.LockscreenSettings.ACTION_PREF_LOCKSCREEN_SHORTCUT_SETTING_CHANGED;
+import static com.dvd.android.xposed.lockscreenmods.LockscreenSettings.ACTION_SLEEP;
 import static com.dvd.android.xposed.lockscreenmods.LockscreenSettings.EXTRA_LS_SAFE_LAUNCH;
 import static com.dvd.android.xposed.lockscreenmods.LockscreenSettings.EXTRA_LS_SHORTCUT_SLOT;
 import static com.dvd.android.xposed.lockscreenmods.LockscreenSettings.EXTRA_LS_SHORTCUT_VALUE;
+import static com.dvd.android.xposed.lockscreenmods.LockscreenSettings.EXTRA_WAKE_ON;
+import static com.dvd.android.xposed.lockscreenmods.LockscreenSettings.PREF_ANIMATIONS_ENABLED;
+import static com.dvd.android.xposed.lockscreenmods.LockscreenSettings.PREF_LONG_CLICK;
 import static com.dvd.android.xposed.lockscreenmods.LockscreenSettings.PREF_SIZE_ICON;
 
 public class ModLockscreen {
@@ -61,6 +67,16 @@ public class ModLockscreen {
                     if (intent.hasExtra(PREF_SIZE_ICON)) {
                         mAppBar.setSize(intent.getIntExtra(PREF_SIZE_ICON, 40));
                     }
+                    if (intent.hasExtra(PREF_ANIMATIONS_ENABLED)) {
+                        mAppBar.setAnimations(intent.getBooleanExtra(PREF_ANIMATIONS_ENABLED, true));
+                    }
+                    if (intent.hasExtra(PREF_LONG_CLICK)) {
+                        mAppBar.setLongClick(intent.getBooleanExtra(PREF_LONG_CLICK, false));
+                    }
+                }
+            } else if (action.equals(ACTION_SLEEP)) {
+                if (intent.hasExtra(EXTRA_WAKE_ON)) {
+                    sleep();
                 }
 
             }
@@ -93,6 +109,7 @@ public class ModLockscreen {
                             IntentFilter intentFilter = new IntentFilter();
                             intentFilter
                                     .addAction(ACTION_PREF_LOCKSCREEN_SHORTCUT_SETTING_CHANGED);
+                            intentFilter.addAction(ACTION_SLEEP);
                             mContext.registerReceiver(mBroadcastReceiver,
                                     intentFilter);
                             if (DEBUG)
@@ -124,6 +141,16 @@ public class ModLockscreen {
                     });
         } catch (Throwable t) {
             XposedBridge.log(t);
+        }
+    }
+
+    private static void sleep() {
+        try {
+            final PowerManager powerManager = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
+
+            XposedHelpers.callMethod(powerManager, "goToSleep", SystemClock.uptimeMillis());
+        } catch (Exception e) {
+            XposedBridge.log(e);
         }
     }
 }

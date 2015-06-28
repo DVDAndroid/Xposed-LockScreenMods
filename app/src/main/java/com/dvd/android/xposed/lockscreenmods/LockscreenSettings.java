@@ -52,6 +52,10 @@ public class LockscreenSettings extends Activity {
     public static final String PREF_KEY_LOCKSCREEN_SHORTCUT_SAFE_LAUNCH = "pref_lockscreen_shortcuts_safe_launch";
     public static final String PREF_HIDE_ICON = "hide_icon";
     public static final String PREF_SIZE_ICON = "icon_size";
+    public static final String PREF_ANIMATIONS_ENABLED = "animations_enabled";
+    public static final String PREF_LONG_CLICK = "long_click";
+    public static final String ACTION_SLEEP = "dvd.action.SLEEP";
+    public static final String EXTRA_WAKE_ON = "dvd.action.WAKE_ON";
     private static SharedPreferences mPrefs;
     private static String mainClass;
 
@@ -95,6 +99,9 @@ public class LockscreenSettings extends Activity {
                 ((TextView) d.findViewById(android.R.id.message))
                         .setMovementMethod(LinkMovementMethod.getInstance());
                 break;
+            case R.id.sleep:
+                sendBroadcast(new Intent()
+                        .setAction(ACTION_SLEEP).putExtra(EXTRA_WAKE_ON, true));
         }
 
         return super.onOptionsItemSelected(item);
@@ -172,6 +179,12 @@ public class LockscreenSettings extends Activity {
                 intent.setAction(ACTION_PREF_LOCKSCREEN_SHORTCUT_SETTING_CHANGED);
                 intent.putExtra(EXTRA_LS_SAFE_LAUNCH,
                         mPrefs.getBoolean(key, false));
+            } else if (key.equals(PREF_ANIMATIONS_ENABLED)) {
+                intent.setAction(ACTION_PREF_LOCKSCREEN_SHORTCUT_SETTING_CHANGED);
+                intent.putExtra(PREF_ANIMATIONS_ENABLED, sharedPreferences.getBoolean(PREF_ANIMATIONS_ENABLED, true));
+            } else if (key.equals(PREF_LONG_CLICK)) {
+                intent.setAction(ACTION_PREF_LOCKSCREEN_SHORTCUT_SETTING_CHANGED);
+                intent.putExtra(PREF_LONG_CLICK, sharedPreferences.getBoolean(PREF_LONG_CLICK, true));
             } else if (key.equals(PREF_HIDE_ICON)) {
                 int mode = sharedPreferences.getBoolean(key, false) ?
                         PackageManager.COMPONENT_ENABLED_STATE_DISABLED :

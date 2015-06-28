@@ -6,8 +6,21 @@
         android:key="pref_cat_lockscreen_shortcuts"
         android:title="@string/pref_lockscreen_shortcuts_title">
 
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="animations_enabled"
+            android:summary="@string/enable_animations_summ"
+            android:title="@string/enable_animations"/>
+
+        <SwitchPreference
+            android:disableDependentsState="true"
+            android:key="long_click"
+            android:summary="@string/enable_long_click_summ"
+            android:title="@string/enable_long_click"/>
+
         <CheckBoxPreference
             android:defaultValue="false"
+            android:dependency="long_click"
             android:key="pref_lockscreen_shortcuts_safe_launch"
             android:summary="@string/pref_lockscreen_shortcuts_safe_launch_summary"
             android:title="@string/pref_lockscreen_shortcuts_safe_launch_title"/>

@@ -2,6 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/sleep"
+        android:icon="@drawable/ic_action_screen_lock_portrait"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/sleep"/>
+
+    <item
         android:id="@+id/about"
         android:icon="@drawable/ic_action_info"
         android:showAsAction="ifRoom|withText"

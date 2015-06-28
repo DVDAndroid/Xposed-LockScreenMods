@@ -88,5 +88,10 @@
     <string name="set_icon_size">Imposta dimensione icona</string>
     <string name="gravitybox_installed">Sembra che GravityBox sia installato. GravityBox può causare alcuni problemi. Non disinstallarlo, disabilita solamente i collegamenti</string>
     <string name="warning">ATTENZIONE!</string>
+    <string name="enable_animations">Abilita animazioni</string>
+    <string name="enable_animations_summ">L\'effetto ripple non può essere disabilitato</string>
+    <string name="enable_long_click">Abilita click lungo</string>
+    <string name="enable_long_click_summ">Click lungo invece di un semplice click per avviare un\'attività</string>
+    <string name="sleep">Spegni schermo</string>
 
 </resources>
