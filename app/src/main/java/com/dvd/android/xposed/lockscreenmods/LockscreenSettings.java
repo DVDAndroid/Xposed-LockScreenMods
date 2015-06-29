@@ -22,7 +22,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
@@ -30,9 +32,12 @@ import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dvd.android.xposed.lockscreenmods.preference.AppPickerPreference;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -111,6 +116,7 @@ public class LockscreenSettings extends Activity {
             SharedPreferences.OnSharedPreferenceChangeListener {
 
         private ShortcutHandler mShortcutHandler;
+        private IconPickHandler mIconPickHandler;
 
         @SuppressWarnings("deprecation")
         @Override
@@ -235,6 +241,50 @@ public class LockscreenSettings extends Activity {
             startActivityForResult(intent, 1028);
         }
 
+        @Override
+        public void onActivityResult(int requestCode, int resultCode, Intent data) {
+            super.onActivityResult(requestCode, resultCode, data);
+            if (requestCode == 1028 && mShortcutHandler != null) {
+                if (resultCode == Activity.RESULT_OK) {
+                    Bitmap b = null;
+                    Intent.ShortcutIconResource siRes = data.getParcelableExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE);
+                    if (siRes != null) {
+                        try {
+                            final Context extContext = getActivity().createPackageContext(
+                                    siRes.packageName, Context.CONTEXT_IGNORE_SECURITY);
+                            final Resources extRes = extContext.getResources();
+                            final int drawableResId = extRes.getIdentifier(siRes.resourceName, "drawable", siRes.packageName);
+                            b = BitmapFactory.decodeResource(extRes, drawableResId);
+                        } catch (PackageManager.NameNotFoundException ignored) {
+                        }
+                    }
+                    if (b == null) {
+                        b = data.getParcelableExtra(Intent.EXTRA_SHORTCUT_ICON);
+                    }
+
+                    mShortcutHandler.onHandleShortcut(
+                            (Intent) data.getParcelableExtra(Intent.EXTRA_SHORTCUT_INTENT),
+                            data.getStringExtra(Intent.EXTRA_SHORTCUT_NAME), b);
+                } else {
+                    mShortcutHandler.onShortcutCancelled();
+                }
+            } else if (requestCode == 1029 && mIconPickHandler != null) {
+                if (resultCode == Activity.RESULT_OK) {
+                    try {
+                        File f = new File(data.getStringExtra(PickImageActivity.EXTRA_FILE_PATH));
+                        Bitmap icon = BitmapFactory.decodeStream(new FileInputStream(f));
+                        mIconPickHandler.onIconPicked(icon);
+                        f.delete();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    mIconPickHandler.onIconPickCancelled();
+                }
+            }
+        }
+
         public interface ShortcutHandler {
             Intent getCreateShortcutIntent();
 
@@ -248,5 +298,7 @@ public class LockscreenSettings extends Activity {
 
             void onIconPickCancelled();
         }
+
+
     }
 }
