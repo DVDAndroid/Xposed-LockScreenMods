@@ -107,5 +107,7 @@
     <string name="enable_animations_summ">Ripple effect cannot be disabled</string>
     <string name="enable_long_click">Enable long click</string>
     <string name="enable_long_click_summ">Long click instead of simple click to start an activity</string>
+    <string name="requires_reboot">Reboot to apply changes</string>
+    <string name="dt2s">Double tap to sleep</string>
 
 </resources>
