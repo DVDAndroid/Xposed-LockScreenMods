@@ -22,6 +22,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -153,12 +154,15 @@ public class LockscreenAppBar {
             mContext.sendBroadcast(newIntent);
             // otherwise start activity dismissing keyguard
         } else {
-            try {
-                XposedHelpers.callMethod(mStatusBar,
-                        "postStartSettingsActivity", intent, 0);
-            } catch (Throwable t) {
-                XposedBridge.log(t);
-            }
+			String method = Build.VERSION.SDK_INT >= 23
+					? "postStartActivityDismissingKeyguard"
+					: "postStartSettingsActivity";
+
+			try {
+				XposedHelpers.callMethod(mStatusBar, method, intent, 0);
+			} catch (Throwable t) {
+				XposedBridge.log(t);
+			}
         }
     }
 
