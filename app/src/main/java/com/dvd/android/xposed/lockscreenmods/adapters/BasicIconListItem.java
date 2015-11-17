@@ -18,8 +18,8 @@ package com.dvd.android.xposed.lockscreenmods.adapters;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 
-public class BasicIconListItem extends BasicListItem implements
-		IIconListAdapterItem {
+public class BasicIconListItem extends BasicListItem
+		implements IIconListAdapterItem {
 	private Drawable mIconLeft;
 	private Drawable mIconRight;
 	private int mIconLeftId;

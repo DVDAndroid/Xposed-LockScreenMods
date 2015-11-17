@@ -34,7 +34,8 @@ public class IconListAdapter extends ArrayAdapter<IIconListAdapterItem>
 	private List<IIconListAdapterItem> mFilteredData = null;
 	private android.widget.Filter mFilter;
 
-	public IconListAdapter(Context context, List<IIconListAdapterItem> objects) {
+	public IconListAdapter(Context context,
+			List<IIconListAdapterItem> objects) {
 		super(context, android.R.layout.simple_list_item_1, objects);
 
 		mContext = context;

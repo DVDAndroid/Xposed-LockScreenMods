@@ -18,18 +18,17 @@ import android.content.Intent;
 
 public class ShortcutActivity {
 
-    public static final String ACTION_LAUNCH_ACTION = "dvd.intent.action.LAUNCH_ACTION";
-    public static final String EXTRA_ACTION = "action";
-    public static final String EXTRA_ACTION_TYPE = "actionType";
+	public static final String ACTION_LAUNCH_ACTION = "dvd.intent.action.LAUNCH_ACTION";
+	public static final String EXTRA_ACTION = "action";
+	public static final String EXTRA_ACTION_TYPE = "actionType";
 	public static final String EXTRA_ALLOW_UNLOCK_ACTION = "allowUnlockAction";
 
 	public static boolean isGbBroadcastShortcut(Intent intent) {
-		return (intent != null
-				&& intent.getAction() != null
-				&& intent.getAction().equals(
-						ShortcutActivity.ACTION_LAUNCH_ACTION)
-				&& intent.hasExtra(ShortcutActivity.EXTRA_ACTION_TYPE) && intent
-				.getStringExtra(ShortcutActivity.EXTRA_ACTION_TYPE).equals(
-						"broadcast"));
+		return (intent != null && intent.getAction() != null
+				&& intent.getAction()
+						.equals(ShortcutActivity.ACTION_LAUNCH_ACTION)
+				&& intent.hasExtra(ShortcutActivity.EXTRA_ACTION_TYPE)
+				&& intent.getStringExtra(ShortcutActivity.EXTRA_ACTION_TYPE)
+						.equals("broadcast"));
 	}
 }

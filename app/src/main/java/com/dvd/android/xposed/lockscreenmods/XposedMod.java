@@ -5,7 +5,8 @@ import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
-public class XposedMod implements IXposedHookZygoteInit, IXposedHookLoadPackage {
+public class XposedMod
+		implements IXposedHookZygoteInit, IXposedHookLoadPackage {
 
 	public static String PACKAGE_NAME = "com.dvd.android.xposed.lockscreenmods";
 	private XSharedPreferences prefs;

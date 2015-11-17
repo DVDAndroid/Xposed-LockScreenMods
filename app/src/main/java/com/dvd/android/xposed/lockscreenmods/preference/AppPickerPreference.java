@@ -57,14 +57,6 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.dvd.android.xposed.lockscreenmods.LockscreenSettings;
-import com.dvd.android.xposed.lockscreenmods.R;
-import com.dvd.android.xposed.lockscreenmods.Utils;
-import com.dvd.android.xposed.lockscreenmods.adapters.BasicIconListItem;
-import com.dvd.android.xposed.lockscreenmods.adapters.IIconListAdapterItem;
-import com.dvd.android.xposed.lockscreenmods.adapters.IconListAdapter;
-import com.dvd.android.xposed.lockscreenmods.shortcut.ShortcutActivity;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -77,10 +69,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import com.dvd.android.xposed.lockscreenmods.LockscreenSettings;
+import com.dvd.android.xposed.lockscreenmods.R;
+import com.dvd.android.xposed.lockscreenmods.Utils;
+import com.dvd.android.xposed.lockscreenmods.adapters.BasicIconListItem;
+import com.dvd.android.xposed.lockscreenmods.adapters.IIconListAdapterItem;
+import com.dvd.android.xposed.lockscreenmods.adapters.IconListAdapter;
+import com.dvd.android.xposed.lockscreenmods.shortcut.ShortcutActivity;
+
 @SuppressWarnings("all")
-public class AppPickerPreference extends DialogPreference implements
-		OnItemClickListener, OnItemSelectedListener, View.OnClickListener,
-		View.OnLongClickListener {
+public class AppPickerPreference extends DialogPreference
+		implements OnItemClickListener, OnItemSelectedListener,
+		View.OnClickListener, View.OnLongClickListener {
 	public static final String SEPARATOR = "#C3C0#";
 	public static final int MODE_APP = 0;
 	public static final int MODE_SHORTCUT = 1;
@@ -90,8 +90,8 @@ public class AppPickerPreference extends DialogPreference implements
 	private static LruCache<String, BitmapDrawable> sAppIconCache;
 
 	static {
-		final int cacheSize = Math.min(
-				(int) Runtime.getRuntime().maxMemory() / 6, 4194304);
+		final int cacheSize = Math
+				.min((int) Runtime.getRuntime().maxMemory() / 6, 4194304);
 		sAppIconCache = new LruCache<String, BitmapDrawable>(cacheSize) {
 			@Override
 			protected int sizeOf(String key, BitmapDrawable d) {
@@ -127,15 +127,15 @@ public class AppPickerPreference extends DialogPreference implements
 		mContext = context;
 		mResources = mContext.getResources();
 		mDefaultSummaryText = (String) getSummary();
-		mAppIconSizePx = (int) TypedValue
-				.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40,
-						mResources.getDisplayMetrics());
-		mAppIconPreviewSizePx = (int) TypedValue
-				.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 60,
-						mResources.getDisplayMetrics());
-		mIconPickSizePx = (int) TypedValue
-				.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50,
-						mResources.getDisplayMetrics());
+		mAppIconSizePx = (int) TypedValue.applyDimension(
+				TypedValue.COMPLEX_UNIT_DIP, 40,
+				mResources.getDisplayMetrics());
+		mAppIconPreviewSizePx = (int) TypedValue.applyDimension(
+				TypedValue.COMPLEX_UNIT_DIP, 60,
+				mResources.getDisplayMetrics());
+		mIconPickSizePx = (int) TypedValue.applyDimension(
+				TypedValue.COMPLEX_UNIT_DIP, 50,
+				mResources.getDisplayMetrics());
 		mPackageManager = mContext.getPackageManager();
 		mMode = MODE_APP;
 		mAppInfo = new AppInfo();
@@ -173,8 +173,8 @@ public class AppPickerPreference extends DialogPreference implements
 						if ((val instanceof String)
 								&& ((String) val).contains("#Intent")) {
 							try {
-								Intent intent = Intent
-										.parseUri((String) val, 0);
+								Intent intent = Intent.parseUri((String) val,
+										0);
 								String fileName = intent.getStringExtra("icon");
 								if (fileName != null) {
 									File iconFile = new File(fileName);
@@ -188,8 +188,8 @@ public class AppPickerPreference extends DialogPreference implements
 						}
 					}
 					// delete all unused icon files
-					File appPickerDir = new File(context.getFilesDir()
-							+ "/app_picker");
+					File appPickerDir = new File(
+							context.getFilesDir() + "/app_picker");
 					if (appPickerDir.exists() && appPickerDir.isDirectory()) {
 						File[] files = appPickerDir.listFiles();
 						for (File f : files) {
@@ -264,8 +264,8 @@ public class AppPickerPreference extends DialogPreference implements
 			}
 
 			@Override
-			public void beforeTextChanged(CharSequence arg0, int arg1,
-					int arg2, int arg3) {
+			public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+					int arg3) {
 			}
 
 			@Override
@@ -274,8 +274,8 @@ public class AppPickerPreference extends DialogPreference implements
 				if (mListView.getAdapter() == null)
 					return;
 
-				((IconListAdapter) mListView.getAdapter()).getFilter().filter(
-						arg0);
+				((IconListAdapter) mListView.getAdapter()).getFilter()
+						.filter(arg0);
 			}
 		});
 
@@ -287,8 +287,8 @@ public class AppPickerPreference extends DialogPreference implements
 				new ArrayList<String>(Arrays.asList(
 						mContext.getString(R.string.app_picker_applications),
 						mContext.getString(R.string.app_picker_shortcuts))));
-		mModeSpinnerAdapter
-				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		mModeSpinnerAdapter.setDropDownViewResource(
+				android.R.layout.simple_spinner_dropdown_item);
 		mModeSpinner.setAdapter(mModeSpinnerAdapter);
 		mModeSpinner.setOnItemSelectedListener(this);
 		mMode = mModeSpinner.getSelectedItemPosition();
@@ -324,7 +324,8 @@ public class AppPickerPreference extends DialogPreference implements
 	}
 
 	@Override
-	protected void onSetInitialValue(boolean restoreValue, Object defaultValue) {
+	protected void onSetInitialValue(boolean restoreValue,
+			Object defaultValue) {
 		if (restoreValue) {
 			String value = getPersistedString(null);
 			if (value != null && value.contains(SEPARATOR)) {
@@ -361,11 +362,9 @@ public class AppPickerPreference extends DialogPreference implements
 										if (intent.hasExtra("icon")) {
 											intent.removeExtra("icon");
 										}
-										intent.putExtra(
-												"iconResName",
-												mResources
-														.getResourceEntryName(item
-																.getIconLeftId()));
+										intent.putExtra("iconResName",
+												mResources.getResourceEntryName(
+														item.getIconLeftId()));
 										setValue(intent.toUri(0));
 									} catch (Exception e) {
 										e.printStackTrace();
@@ -398,8 +397,8 @@ public class AppPickerPreference extends DialogPreference implements
 					@Override
 					public void onIconPicked(Bitmap icon) {
 						try {
-							Intent intent = Intent.parseUri(
-									getPersistedString(null), 0);
+							Intent intent = Intent
+									.parseUri(getPersistedString(null), 0);
 							final Context context = AppPickerPreference.this.mContext;
 							final String dir = context.getFilesDir()
 									+ "/app_picker";
@@ -453,9 +452,8 @@ public class AppPickerPreference extends DialogPreference implements
 			Log.d(TAG, "Converted old AppPickerPreference value: " + newValue);
 			return newValue;
 		} catch (Exception e) {
-			Log.e(TAG,
-					"Error converting old AppPickerPreference value: "
-							+ e.getMessage());
+			Log.e(TAG, "Error converting old AppPickerPreference value: "
+					+ e.getMessage());
 			return null;
 		}
 	}
@@ -504,17 +502,24 @@ public class AppPickerPreference extends DialogPreference implements
 				Collections.sort(appList,
 						new ResolveInfo.DisplayNameComparator(mPackageManager));
 				if (mNullItemEnabled) {
-					itemList.add(mMode == MODE_SHORTCUT ? new ShortcutItem(
-							mContext.getString(R.string.app_picker_none), null)
-							: new AppItem(mContext
-									.getString(R.string.app_picker_none), null));
+					itemList.add(
+							mMode == MODE_SHORTCUT
+									? new ShortcutItem(
+											mContext.getString(
+													R.string.app_picker_none),
+											null)
+									: new AppItem(
+											mContext.getString(
+													R.string.app_picker_none),
+											null));
 				}
 				for (ResolveInfo ri : appList) {
 					if (this.isCancelled())
 						break;
 					String appName = ri.loadLabel(mPackageManager).toString();
-					IIconListAdapterItem ai = mMode == MODE_SHORTCUT ? new ShortcutItem(
-							appName, ri) : new AppItem(appName, ri);
+					IIconListAdapterItem ai = mMode == MODE_SHORTCUT
+							? new ShortcutItem(appName, ri)
+							: new AppItem(appName, ri);
 					itemList.add(ai);
 				}
 
@@ -522,7 +527,8 @@ public class AppPickerPreference extends DialogPreference implements
 			}
 
 			@Override
-			protected void onPostExecute(ArrayList<IIconListAdapterItem> result) {
+			protected void onPostExecute(
+					ArrayList<IIconListAdapterItem> result) {
 				mProgressBar.setVisibility(View.GONE);
 				mSearch.setVisibility(View.VISIBLE);
 				mListView.setAdapter(new IconListAdapter(mContext, result));
@@ -586,9 +592,11 @@ public class AppPickerPreference extends DialogPreference implements
 		try {
 			Intent intent = Intent.parseUri(value, 0);
 
-			int iconResId = intent.getStringExtra("iconResName") != null ? mResources
-					.getIdentifier(intent.getStringExtra("iconResName"),
-							"drawable", mContext.getPackageName()) : 0;
+			int iconResId = intent.getStringExtra("iconResName") != null
+					? mResources.getIdentifier(
+							intent.getStringExtra("iconResName"), "drawable",
+							mContext.getPackageName())
+					: 0;
 			if (iconResId != 0) {
 				appInfo.icon = mResources.getDrawable(iconResId);
 			} else if (intent.hasExtra("icon")) {
@@ -704,8 +712,8 @@ public class AppPickerPreference extends DialogPreference implements
 				final String key = getKey();
 				mAppIcon = sAppIconCache.get(key);
 				if (mAppIcon == null) {
-					Bitmap bitmap = Utils.drawableToBitmap(mResolveInfo
-							.loadIcon(mPackageManager));
+					Bitmap bitmap = Utils.drawableToBitmap(
+							mResolveInfo.loadIcon(mPackageManager));
 					bitmap = Bitmap.createScaledBitmap(bitmap, mAppIconSizePx,
 							mAppIconSizePx, false);
 					mAppIcon = new BitmapDrawable(mResources, bitmap);
@@ -721,8 +729,8 @@ public class AppPickerPreference extends DialogPreference implements
 		}
 	}
 
-	class ShortcutItem extends AppItem implements
-			LockscreenSettings.PrefsFragment.ShortcutHandler {
+	class ShortcutItem extends AppItem
+			implements LockscreenSettings.PrefsFragment.ShortcutHandler {
 		private Intent mCreateShortcutIntent;
 		private ShortcutCreatedListener mShortcutCreatedListener;
 
@@ -737,15 +745,16 @@ public class AppPickerPreference extends DialogPreference implements
 						mResolveInfo.activityInfo.name);
 				mCreateShortcutIntent.setComponent(cn);
 				// mark intent so we can later identify it comes from GB
-                mCreateShortcutIntent.putExtra("dvd", true);
-                if (mAllowUnlockAction) {
-                    mCreateShortcutIntent.putExtra(
+				mCreateShortcutIntent.putExtra("dvd", true);
+				if (mAllowUnlockAction) {
+					mCreateShortcutIntent.putExtra(
 							ShortcutActivity.EXTRA_ALLOW_UNLOCK_ACTION, true);
 				}
 			}
 		}
 
-		public void setShortcutCreatedListener(ShortcutCreatedListener listener) {
+		public void setShortcutCreatedListener(
+				ShortcutCreatedListener listener) {
 			mShortcutCreatedListener = listener;
 		}
 
@@ -798,8 +807,9 @@ public class AppPickerPreference extends DialogPreference implements
 					d.setExecutable(true, false);
 					File f = new File(fileName);
 					FileOutputStream fos = new FileOutputStream(f);
-					final boolean iconSaved = icon == null ? mAppIcon
-							.getBitmap().compress(CompressFormat.PNG, 100, fos)
+					final boolean iconSaved = icon == null
+							? mAppIcon.getBitmap().compress(CompressFormat.PNG,
+									100, fos)
 							: icon.compress(CompressFormat.PNG, 100, fos);
 					if (iconSaved) {
 						mIntent.putExtra("icon", f.getAbsolutePath());

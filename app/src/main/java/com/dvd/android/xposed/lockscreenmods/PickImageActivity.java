@@ -72,25 +72,29 @@ public class PickImageActivity extends Activity {
 			mScaleUp = startIntent.getBooleanExtra(EXTRA_SCALE_UP, false);
 			if (startIntent.hasExtra(EXTRA_ASPECT_X)
 					|| startIntent.hasExtra(EXTRA_ASPECT_Y)) {
-				mAspectSize = new Point(startIntent.getIntExtra(EXTRA_ASPECT_X,
-						0), startIntent.getIntExtra(EXTRA_ASPECT_Y, 0));
+				mAspectSize = new Point(
+						startIntent.getIntExtra(EXTRA_ASPECT_X, 0),
+						startIntent.getIntExtra(EXTRA_ASPECT_Y, 0));
 			}
 			if (startIntent.hasExtra(EXTRA_OUTPUT_X)
 					|| startIntent.hasExtra(EXTRA_OUTPUT_Y)) {
-				mOutputSize = new Point(startIntent.getIntExtra(EXTRA_OUTPUT_X,
-						0), startIntent.getIntExtra(EXTRA_OUTPUT_Y, 0));
+				mOutputSize = new Point(
+						startIntent.getIntExtra(EXTRA_OUTPUT_X, 0),
+						startIntent.getIntExtra(EXTRA_OUTPUT_Y, 0));
 			}
 			if (startIntent.hasExtra(EXTRA_SPOTLIGHT_X)
 					|| startIntent.hasExtra(EXTRA_SPOTLIGHT_Y)) {
-				mSpotlightSize = new Point(startIntent.getIntExtra(
-						EXTRA_SPOTLIGHT_X, 0), startIntent.getIntExtra(
-						EXTRA_SPOTLIGHT_Y, 0));
+				mSpotlightSize = new Point(
+						startIntent.getIntExtra(EXTRA_SPOTLIGHT_X, 0),
+						startIntent.getIntExtra(EXTRA_SPOTLIGHT_Y, 0));
 			}
 
 			Intent intent = new Intent(Intent.ACTION_PICK);
 			intent.setType("image/*");
-			startActivityForResult(Intent.createChooser(intent,
-					getString(R.string.imgpick_dialog_title)), REQ_PICK_IMAGE);
+			startActivityForResult(
+					Intent.createChooser(intent,
+							getString(R.string.imgpick_dialog_title)),
+					REQ_PICK_IMAGE);
 		} else {
 			finish();
 		}
@@ -112,8 +116,8 @@ public class PickImageActivity extends Activity {
 			} else if (requestCode == REQ_CROP_IMAGE) {
 				new File(mLoadResult.filePath).delete();
 				mLoadResult.filePath += "_cropped";
-				setResult(Activity.RESULT_OK, new Intent().putExtra(
-						EXTRA_FILE_PATH, mLoadResult.filePath));
+				setResult(Activity.RESULT_OK, new Intent()
+						.putExtra(EXTRA_FILE_PATH, mLoadResult.filePath));
 				finish();
 			}
 		} else {
@@ -128,12 +132,11 @@ public class PickImageActivity extends Activity {
 			cleanup();
 			return;
 		} else if (result.exception != null) {
-			Toast.makeText(
-					this,
+			Toast.makeText(this,
 					String.format("%s: %s",
 							getString(R.string.imgpick_choose_error),
-							result.exception.getMessage()), Toast.LENGTH_SHORT)
-					.show();
+							result.exception.getMessage()),
+					Toast.LENGTH_SHORT).show();
 			setResult(Activity.RESULT_CANCELED);
 			cleanup();
 			finish();
@@ -144,8 +147,8 @@ public class PickImageActivity extends Activity {
 		if (mCropImage) {
 			cropImage();
 		} else {
-			setResult(Activity.RESULT_OK, new Intent().putExtra(
-					EXTRA_FILE_PATH, mLoadResult.filePath));
+			setResult(Activity.RESULT_OK, new Intent().putExtra(EXTRA_FILE_PATH,
+					mLoadResult.filePath));
 			finish();
 		}
 	}
@@ -175,8 +178,8 @@ public class PickImageActivity extends Activity {
 			cropIntent.putExtra("outputFormat",
 					Bitmap.CompressFormat.PNG.toString());
 
-			File out = new File(getCacheDir() + "/" + srcFile.getName()
-					+ "_cropped");
+			File out = new File(
+					getCacheDir() + "/" + srcFile.getName() + "_cropped");
 			out.createNewFile();
 			out.setReadable(true, false);
 			out.setWritable(true, false);
@@ -184,11 +187,11 @@ public class PickImageActivity extends Activity {
 			startActivityForResult(cropIntent, REQ_CROP_IMAGE);
 		} catch (Exception e) {
 			e.printStackTrace();
-			Toast.makeText(
-					this,
+			Toast.makeText(this,
 					String.format("%s: %s",
 							getString(R.string.imgpick_crop_error),
-							e.getMessage()), Toast.LENGTH_SHORT).show();
+							e.getMessage()),
+					Toast.LENGTH_SHORT).show();
 			setResult(Activity.RESULT_CANCELED);
 			cleanup();
 			finish();
@@ -223,8 +226,8 @@ public class PickImageActivity extends Activity {
 
 		@Override
 		protected LoadResult doInBackground(Uri... params) {
-			File outFile = new File(getCacheDir() + "/"
-					+ UUID.randomUUID().toString());
+			File outFile = new File(
+					getCacheDir() + "/" + UUID.randomUUID().toString());
 			LoadResult result = new LoadResult();
 			InputStream in = null;
 			FileOutputStream out = null;

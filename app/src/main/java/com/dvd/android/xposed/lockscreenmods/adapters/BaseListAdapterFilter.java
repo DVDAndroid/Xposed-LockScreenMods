@@ -21,8 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class BaseListAdapterFilter<T extends IBaseListAdapterItem> extends
-		Filter {
+public class BaseListAdapterFilter<T extends IBaseListAdapterItem>
+		extends Filter {
 	private IBaseListAdapterFilterable<T> mTarget;
 
 	public BaseListAdapterFilter(IBaseListAdapterFilterable<T> target) {
@@ -42,8 +42,8 @@ public class BaseListAdapterFilter<T extends IBaseListAdapterItem> extends
 			final ArrayList<T> nlist = new ArrayList<>();
 			for (int i = 0; i < original.size(); i++) {
 				final T item = original.get(i);
-				final String val = item.getText().toLowerCase(
-						Locale.getDefault());
+				final String val = item.getText()
+						.toLowerCase(Locale.getDefault());
 
 				if (val.contains(search))
 					nlist.add(item);
@@ -58,7 +58,8 @@ public class BaseListAdapterFilter<T extends IBaseListAdapterItem> extends
 
 	@SuppressWarnings("unchecked")
 	@Override
-	protected void publishResults(CharSequence constraint, FilterResults results) {
+	protected void publishResults(CharSequence constraint,
+			FilterResults results) {
 		mTarget.onFilterPublishResults((ArrayList<T>) results.values);
 	}
 

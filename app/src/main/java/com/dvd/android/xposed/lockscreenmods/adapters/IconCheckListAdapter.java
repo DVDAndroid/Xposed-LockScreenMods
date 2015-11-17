@@ -28,8 +28,8 @@ import java.util.List;
 
 import com.dvd.android.xposed.lockscreenmods.R;
 
-public class IconCheckListAdapter extends
-		ArrayAdapter<IIconCheckListAdapterItem> {
+public class IconCheckListAdapter
+		extends ArrayAdapter<IIconCheckListAdapterItem> {
 	private Context mContext;
 	private List<IIconCheckListAdapterItem> mData = null;
 	private boolean mSubtextEnabled;
