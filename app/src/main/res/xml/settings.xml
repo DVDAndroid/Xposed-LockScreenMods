@@ -39,10 +39,6 @@
     <PreferenceCategory android:title="@string/other_settings">
 
         <CheckBoxPreference
-            android:key="double_tap_2_sleep"
-            android:title="@string/dt2s"/>
-
-        <CheckBoxPreference
             android:key="hide_icon"
             android:title="@string/hide_icon_title"/>
 
