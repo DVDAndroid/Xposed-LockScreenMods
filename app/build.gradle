@@ -8,8 +8,8 @@ android {
         applicationId "com.dvd.android.xposed.lockscreenmods"
         minSdkVersion 21
         targetSdkVersion 22
-        versionCode 7
-        versionName "1.4"
+        versionCode 8
+        versionName "1.5"
     }
     buildTypes {
         release {
