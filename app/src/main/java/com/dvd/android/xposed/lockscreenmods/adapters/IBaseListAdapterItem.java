@@ -16,7 +16,7 @@
 package com.dvd.android.xposed.lockscreenmods.adapters;
 
 public interface IBaseListAdapterItem {
-	String getText();
+    String getText();
 
-	String getSubText();
+    String getSubText();
 }

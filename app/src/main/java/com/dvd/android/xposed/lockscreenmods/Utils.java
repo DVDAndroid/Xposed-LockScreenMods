@@ -19,26 +19,50 @@ import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class Utils {
-	public static Bitmap drawableToBitmap(Drawable drawable) {
-		if (drawable == null)
-			return null;
 
-		if (drawable instanceof BitmapDrawable) {
-			return ((BitmapDrawable) drawable).getBitmap();
-		}
+    public static final String PREF_CAT_KEY_LOCKSCREEN_SHORTCUTS = "pref_cat_lockscreen_shortcuts";
+    public static final List<String> PREF_KEY_LOCKSCREEN_SHORTCUT = new ArrayList<>(
+            Arrays.asList("pref_lockscreen_shortcut0",
+                    "pref_lockscreen_shortcut1", "pref_lockscreen_shortcut2",
+                    "pref_lockscreen_shortcut3", "pref_lockscreen_shortcut4",
+                    "pref_lockscreen_shortcut5"));
+    public static final String ACTION_PREF_LOCKSCREEN_SHORTCUT_SETTING_CHANGED = "dvd.intent.action.LOCKSCREEN_SHORTCUT_SETTING_CHANGED";
+    public static final String EXTRA_LS_SHORTCUT_SLOT = "lockscreenShortcutSlot";
+    public static final String EXTRA_LS_SHORTCUT_VALUE = "lockscreenShortcutValue";
+    public static final String EXTRA_LS_SAFE_LAUNCH = "lockscreenShortcutSafeLaunch";
+    public static final String PREF_KEY_LOCKSCREEN_SHORTCUT_SAFE_LAUNCH = "pref_lockscreen_shortcuts_safe_launch";
+    public static final String PREF_HIDE_ICON = "hide_icon";
+    public static final String PREF_SIZE_ICON = "icon_size";
+    public static final String PREF_ANIMATIONS_ENABLED = "animations_enabled";
+    public static final String PREF_LONG_CLICK = "long_click";
+    public static final String ACTION_SLEEP = "dvd.action.SLEEP";
+    public static final String EXTRA_WAKE_ON = "dvd.action.WAKE_ON";
+    public static final String PREF_D2TS = "double_tap_2_sleep";
+    public static final String ACTION_LOCKSCREEN_SETTINGS_CHANGED = "dvd.intent.action.LOCKSCREEN_SETTINGS_CHANGED";
 
-		int width = drawable.getIntrinsicWidth();
-		width = width > 0 ? width : 1;
-		int height = drawable.getIntrinsicHeight();
-		height = height > 0 ? height : 1;
+    public static Bitmap drawableToBitmap(Drawable drawable) {
+        if (drawable == null)
+            return null;
 
-		Bitmap bitmap = Bitmap.createBitmap(width, height,
-				Bitmap.Config.ARGB_8888);
-		Canvas canvas = new Canvas(bitmap);
-		drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-		drawable.draw(canvas);
+        if (drawable instanceof BitmapDrawable) {
+            return ((BitmapDrawable) drawable).getBitmap();
+        }
 
-		return bitmap;
-	}
+        int width = drawable.getIntrinsicWidth();
+        width = width > 0 ? width : 1;
+        int height = drawable.getIntrinsicHeight();
+        height = height > 0 ? height : 1;
+
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+
+        return bitmap;
+    }
 }

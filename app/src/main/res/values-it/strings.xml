@@ -93,5 +93,7 @@
     <string name="enable_long_click">Abilita click lungo</string>
     <string name="enable_long_click_summ">Click lungo invece di un semplice click per avviare un\'attività</string>
     <string name="sleep">Spegni schermo</string>
+    <string name="dt2s">Doppio tocco per spegnere</string>
+    <string name="requires_reboot">Riavvia per applicare cambiamenti</string>
 
 </resources>

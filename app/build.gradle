@@ -2,12 +2,12 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    buildToolsVersion "23.0.3"
 
     defaultConfig {
         applicationId "com.dvd.android.xposed.lockscreenmods"
         minSdkVersion 21
-        targetSdkVersion 22
+        targetSdkVersion 23
         versionCode 8
         versionName "1.5"
     }
@@ -20,5 +20,6 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    provided 'de.robv.android.xposed:api:82'
+    compile 'com.android.support:support-annotations:23.0.1'
 }
