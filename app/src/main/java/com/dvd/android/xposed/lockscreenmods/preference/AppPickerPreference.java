@@ -16,8 +16,6 @@
 package com.dvd.android.xposed.lockscreenmods.preference;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -60,7 +58,6 @@ import android.widget.Toast;
 import com.dvd.android.xposed.lockscreenmods.LockscreenSettings;
 import com.dvd.android.xposed.lockscreenmods.R;
 import com.dvd.android.xposed.lockscreenmods.Utils;
-import com.dvd.android.xposed.lockscreenmods.adapters.BasicIconListItem;
 import com.dvd.android.xposed.lockscreenmods.adapters.IIconListAdapterItem;
 import com.dvd.android.xposed.lockscreenmods.adapters.IconListAdapter;
 import com.dvd.android.xposed.lockscreenmods.shortcut.ShortcutActivity;
@@ -84,7 +81,6 @@ public class AppPickerPreference extends DialogPreference implements OnItemClick
     public static final int MODE_SHORTCUT = 1;
     private static final String TAG = "GB:AppPickerPreference";
     public static LockscreenSettings.PrefsFragment sPrefsFragment;
-    private static IconListAdapter sIconPickerAdapter;
     private static LruCache<String, BitmapDrawable> sAppIconCache;
 
     static {
@@ -111,7 +107,6 @@ public class AppPickerPreference extends DialogPreference implements OnItemClick
     private ImageView mBtnAppIcon;
     private AppInfo mAppInfo;
     private int mAppIconPreviewSizePx;
-    private Dialog mIconPickerDialog;
     private int mIconPickSizePx;
     private boolean mNullItemEnabled = true;
     private String mValue;
@@ -136,10 +131,6 @@ public class AppPickerPreference extends DialogPreference implements OnItemClick
 
         setDialogLayoutResource(R.layout.app_picker_preference);
         setPositiveButtonText(null);
-
-        if (sIconPickerAdapter == null) {
-            initializeIconPickerAdapter();
-        }
     }
 
     public static void cleanupAsync(final Context context) {
@@ -186,23 +177,6 @@ public class AppPickerPreference extends DialogPreference implements OnItemClick
                 return null;
             }
         }.execute();
-    }
-
-    private void initializeIconPickerAdapter() {
-        String[] labels = mResources.getStringArray(R.array.shortcut_icon_picker_labels);
-        TypedArray icons = mResources.obtainTypedArray(R.array.shortcut_icon_picker_icons);
-        if (labels.length != icons.length()) {
-            icons.recycle();
-            return;
-        }
-
-        ArrayList<IIconListAdapterItem> list = new ArrayList<>(labels.length);
-        for (int i = 0; i < labels.length; i++) {
-            BasicIconListItem item = new BasicIconListItem(labels[i], null, icons.getResourceId(i, 0), 0, mResources);
-            list.add(item);
-        }
-        sIconPickerAdapter = new IconListAdapter(mContext, list);
-        icons.recycle();
     }
 
     @Override
@@ -276,11 +250,6 @@ public class AppPickerPreference extends DialogPreference implements OnItemClick
             mAsyncTask.cancel(true);
         }
         mAsyncTask = null;
-
-        if (mIconPickerDialog != null && mIconPickerDialog.isShowing()) {
-            mIconPickerDialog.dismiss();
-        }
-        mIconPickerDialog = null;
     }
 
     @Override
@@ -305,41 +274,8 @@ public class AppPickerPreference extends DialogPreference implements OnItemClick
 
     @Override
     public void onClick(View v) {
-        if (v != mBtnAppIcon || sIconPickerAdapter == null
-                || getPersistedString(null) == null)
+        if (v != mBtnAppIcon || getPersistedString(null) == null)
             return;
-
-        if (mIconPickerDialog == null) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(mContext).setTitle(R.string.icon_picker_choose_icon_title).setAdapter(sIconPickerAdapter,
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                            try {
-                                BasicIconListItem item = (BasicIconListItem) sIconPickerAdapter.getItem(which);
-                                Intent intent = Intent.parseUri(getPersistedString(null), 0);
-                                if (intent.hasExtra("icon")) {
-                                    intent.removeExtra("icon");
-                                }
-                                intent.putExtra("iconResName", mResources.getResourceEntryName(item.getIconLeftId()));
-                                setValue(intent.toUri(0));
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-
-                        }
-                    })
-                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog,
-                                            int which) {
-                            dialog.dismiss();
-                        }
-                    });
-            mIconPickerDialog = builder.create();
-        }
-
-        mIconPickerDialog.show();
     }
 
     private String convertOldValueFormat(String oldValue) {
