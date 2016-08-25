@@ -1,5 +1,7 @@
 LockScreen Mods - Xposed
 ============================
+[![Build Status](https://travis-ci.org/DVDAndroid/Xposed-LockScreenMods.svg?branch=master)](https://travis-ci.org/DVDAndroid/Xposed-LockScreenMods)
+
 
 Xposed Module extracted from [GravityBox](https://github.com/GravityBox/GravityBox/tree/lollipop) that allows to add shortcut in lockscreen
 
