@@ -24,7 +24,6 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
-import android.support.annotation.DrawableRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -223,9 +222,9 @@ public class LockscreenAppBar {
                 final int mode = mIntent.getIntExtra("mode",
                         AppPickerPreference.MODE_APP);
 
-                @DrawableRes
                 final int iconResId = mIntent.getStringExtra("iconResName") != null ? mResources.getIdentifier(mIntent.getStringExtra("iconResName"), "drawable", mGbContext.getPackageName()) : 0;
                 if (iconResId != 0) {
+                    //noinspection ResourceType
                     icon = mResources.getDrawable(iconResId);
                 } else {
                     final String appIconPath = mIntent.getStringExtra("icon");
