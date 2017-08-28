@@ -17,8 +17,7 @@ public class XposedMod implements IXposedHookZygoteInit, IXposedHookLoadPackage 
     }
 
     @Override
-    public void handleLoadPackage(XC_LoadPackage.LoadPackageParam lpparam)
-            throws Throwable {
+    public void handleLoadPackage(XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
         if (lpparam.packageName.equals(ModLockscreen.PACKAGE_NAME)) {
             ModLockscreen.init(prefs, lpparam.classLoader);
         }

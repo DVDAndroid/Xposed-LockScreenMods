@@ -45,9 +45,9 @@ import static com.dvd.android.xposed.lockscreenmods.Utils.PREF_SIZE_ICON;
 public class ModLockscreen {
 
     public static final String PACKAGE_NAME = "com.android.systemui";
-    public static final String CLASS_PHONE_STATUSBAR = "com.android.systemui.statusbar.phone.PhoneStatusBar";
     private static final String CLASS_KGVIEW_MEDIATOR = "com.android.systemui.keyguard.KeyguardViewMediator";
     private static final String CLASS_NOTIF_PANEL_VIEW = "com.android.systemui.statusbar.phone.NotificationPanelView";
+    public static String CLASS_PHONE_STATUSBAR = "com.android.systemui.statusbar.phone.";
     private static LockscreenAppBar mAppBar;
     private static Context mContext;
     private static Context mGbContext;
@@ -111,13 +111,18 @@ public class ModLockscreen {
                 }
             });
 
+            if (Build.VERSION.SDK_INT < 26) {
+                CLASS_PHONE_STATUSBAR += "Phone";
+            }
+            CLASS_PHONE_STATUSBAR += "StatusBar";
+
             XposedHelpers.findAndHookMethod(CLASS_PHONE_STATUSBAR, classLoader, "makeStatusBarView", new XC_MethodHook() {
                 @Override
                 protected void afterHookedMethod(final MethodHookParam param) throws Throwable {
                     ViewGroup kgStatusView = (ViewGroup) XposedHelpers.getObjectField(param.thisObject, "mKeyguardStatusView");
                     int containerId = kgStatusView.getResources().getIdentifier("keyguard_clock_container", "id", PACKAGE_NAME);
                     if (containerId != 0) {
-                        ViewGroup container = (ViewGroup) kgStatusView.findViewById(containerId);
+                        ViewGroup container = kgStatusView.findViewById(containerId);
                         if (container != null) {
                             mAppBar = new LockscreenAppBar(mContext, mGbContext, container, param.thisObject, prefs);
                         }
